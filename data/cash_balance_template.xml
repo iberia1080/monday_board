@@ -1,0 +1,180 @@
+<odoo noupdate="1">
+    <record id="board_balance_caja_guadalajara" model="monday.board">
+        <field name="name">Balance de Caja - Guadalajara</field>
+        <field name="description">Tablero de caja configurado para Guadalajara.</field>
+    </record>
+
+    <record id="col_concepto" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">CONCEPTO</field>
+        <field name="code">concepto</field>
+        <field name="sequence">10</field>
+        <field name="field_type">text</field>
+    </record>
+    <record id="col_persona" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Persona</field>
+        <field name="code">persona</field>
+        <field name="sequence">20</field>
+        <field name="field_type">user</field>
+    </record>
+    <record id="col_fecha_pago" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Fecha de Pago</field>
+        <field name="code">fecha_pago</field>
+        <field name="sequence">30</field>
+        <field name="field_type">date</field>
+    </record>
+    <record id="col_hora_pago" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Hora de Pago</field>
+        <field name="code">hora_pago</field>
+        <field name="sequence">40</field>
+        <field name="field_type">time</field>
+    </record>
+    <record id="col_movimiento" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Movimiento</field>
+        <field name="code">movimiento</field>
+        <field name="sequence">50</field>
+        <field name="field_type">tag</field>
+    </record>
+    <record id="col_entrada" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Entrada</field>
+        <field name="code">entrada</field>
+        <field name="sequence">60</field>
+        <field name="field_type">number</field>
+        <field name="is_currency">1</field>
+        <field name="currency_symbol">$</field>
+    </record>
+    <record id="col_salida" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Salida</field>
+        <field name="code">salida</field>
+        <field name="sequence">70</field>
+        <field name="field_type">number</field>
+        <field name="is_currency">1</field>
+        <field name="currency_symbol">$</field>
+    </record>
+    <record id="col_compra" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Compra</field>
+        <field name="code">compra</field>
+        <field name="sequence">80</field>
+        <field name="field_type">text</field>
+    </record>
+    <record id="col_sucursal" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Sucursal</field>
+        <field name="code">sucursal</field>
+        <field name="sequence">90</field>
+        <field name="field_type">tag</field>
+    </record>
+    <record id="col_comprobante" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Comprobante</field>
+        <field name="code">comprobante</field>
+        <field name="sequence">100</field>
+        <field name="field_type">attachment</field>
+    </record>
+    <record id="col_total_real" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Total Real</field>
+        <field name="code">total_real</field>
+        <field name="sequence">110</field>
+        <field name="field_type">formula</field>
+        <field name="formula_expression">entrada - salida if dinero == 'Realizado' else ''</field>
+    </record>
+    <record id="col_total_proyeccion" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Total Proyeccion</field>
+        <field name="code">total_proyeccion</field>
+        <field name="sequence">120</field>
+        <field name="field_type">formula</field>
+        <field name="formula_expression">entrada - salida if dinero != 'Pagado Transfer' else ''</field>
+    </record>
+    <record id="col_dinero" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Dinero</field>
+        <field name="code">dinero</field>
+        <field name="sequence">130</field>
+        <field name="field_type">status</field>
+    </record>
+    <record id="col_status" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Status</field>
+        <field name="code">status</field>
+        <field name="sequence">140</field>
+        <field name="field_type">status</field>
+    </record>
+    <record id="col_audita" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Audita</field>
+        <field name="code">audita</field>
+        <field name="sequence">150</field>
+        <field name="field_type">status</field>
+    </record>
+    <record id="col_nota_auditoria" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Nota Auditoria</field>
+        <field name="code">nota_auditoria</field>
+        <field name="sequence">160</field>
+        <field name="field_type">text</field>
+    </record>
+    <record id="col_ultima_actualizacion" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Ultima Actualizacion</field>
+        <field name="code">ultima_actualizacion</field>
+        <field name="sequence">170</field>
+        <field name="field_type">audit</field>
+    </record>
+    <record id="col_creacion_registro" model="monday.board.column">
+        <field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/>
+        <field name="name">Creacion de Registro</field>
+        <field name="code">creacion_registro</field>
+        <field name="sequence">180</field>
+        <field name="field_type">creation</field>
+    </record>
+
+    <record id="tag_mov_1" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_movimiento"/><field name="name">#VentaEfe</field><field name="color">1</field></record>
+    <record id="tag_mov_2" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_movimiento"/><field name="name">#CortedeCaja</field><field name="color">2</field></record>
+    <record id="tag_mov_3" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_movimiento"/><field name="name">#CortedeCajaTotoPlaza</field><field name="color">3</field></record>
+    <record id="tag_mov_4" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_movimiento"/><field name="name">#CortedeCajaPlazaGDL</field><field name="color">4</field></record>
+    <record id="tag_mov_5" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_movimiento"/><field name="name">#CortedeCajaPiso8</field><field name="color">5</field></record>
+    <record id="tag_mov_6" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_movimiento"/><field name="name">#IngresoCaja</field><field name="color">6</field></record>
+    <record id="tag_mov_7" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_movimiento"/><field name="name">#SueldoTony</field><field name="color">7</field></record>
+    <record id="tag_mov_8" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_movimiento"/><field name="name">#PayJoy</field><field name="color">8</field></record>
+    <record id="tag_mov_9" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_movimiento"/><field name="name">#DotacionToto</field><field name="color">9</field></record>
+
+    <record id="tag_suc_1" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_sucursal"/><field name="name">#302A</field><field name="color">1</field></record>
+    <record id="tag_suc_2" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_sucursal"/><field name="name">#Piso8</field><field name="color">2</field></record>
+    <record id="tag_suc_3" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_sucursal"/><field name="name">#TototlanPlaza</field><field name="color">3</field></record>
+    <record id="tag_suc_4" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_sucursal"/><field name="name">#PlazaGDL</field><field name="color">4</field></record>
+    <record id="tag_suc_5" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_sucursal"/><field name="name">#Tony</field><field name="color">5</field></record>
+    <record id="tag_suc_6" model="monday.board.tag"><field name="board_id" ref="monday_board.board_balance_caja_guadalajara"/><field name="column_id" ref="monday_board.col_sucursal"/><field name="name">#BodegaToto</field><field name="color">6</field></record>
+
+    <record id="status_dinero_default" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_dinero"/><field name="name"></field><field name="sequence">10</field><field name="color">0</field><field name="is_default">1</field></record>
+    <record id="status_dinero_1" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_dinero"/><field name="name">Realizado</field><field name="sequence">20</field><field name="color">1</field></record>
+    <record id="status_dinero_2" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_dinero"/><field name="name">Se Cancela</field><field name="sequence">30</field><field name="color">2</field></record>
+    <record id="status_dinero_3" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_dinero"/><field name="name">Sin Recibir</field><field name="sequence">40</field><field name="color">3</field></record>
+    <record id="status_dinero_4" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_dinero"/><field name="name">Por Programar</field><field name="sequence">50</field><field name="color">4</field></record>
+    <record id="status_dinero_5" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_dinero"/><field name="name">Pagado Transfer</field><field name="sequence">60</field><field name="color">5</field></record>
+
+    <record id="status_status_default" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_status"/><field name="name"></field><field name="sequence">10</field><field name="color">0</field><field name="is_default">1</field></record>
+    <record id="status_status_1" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_status"/><field name="name">Pagado Por Mi</field><field name="sequence">20</field><field name="color">1</field></record>
+    <record id="status_status_2" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_status"/><field name="name">Se Cancela</field><field name="sequence">30</field><field name="color">2</field></record>
+    <record id="status_status_3" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_status"/><field name="name">Entregado a Miguel</field><field name="sequence">40</field><field name="color">3</field></record>
+    <record id="status_status_4" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_status"/><field name="name">Recibido de Tony</field><field name="sequence">50</field><field name="color">6</field></record>
+    <record id="status_status_5" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_status"/><field name="name">Entregado a Tony</field><field name="sequence">60</field><field name="color">7</field></record>
+    <record id="status_status_6" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_status"/><field name="name">Corte de Caja</field><field name="sequence">70</field><field name="color">8</field></record>
+    <record id="status_status_7" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_status"/><field name="name">Recibido de Felipe</field><field name="sequence">80</field><field name="color">9</field></record>
+    <record id="status_status_8" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_status"/><field name="name">Recibido de Angie</field><field name="sequence">90</field><field name="color">10</field></record>
+    <record id="status_status_9" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_status"/><field name="name">Pagado por Miguel</field><field name="sequence">100</field><field name="color">4</field></record>
+    <record id="status_status_10" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_status"/><field name="name">Recibido de Miguel</field><field name="sequence">110</field><field name="color">11</field></record>
+
+    <record id="status_audita_default" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_audita"/><field name="name"></field><field name="sequence">10</field><field name="color">0</field><field name="is_default">1</field></record>
+    <record id="status_audita_1" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_audita"/><field name="name">Hecha</field><field name="sequence">20</field><field name="color">1</field></record>
+    <record id="status_audita_2" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_audita"/><field name="name">Revisar</field><field name="sequence">30</field><field name="color">2</field></record>
+    <record id="status_audita_3" model="monday.board.status.option"><field name="column_id" ref="monday_board.col_audita"/><field name="name">Revisando ver Nota</field><field name="sequence">40</field><field name="color">12</field></record>
+</odoo>

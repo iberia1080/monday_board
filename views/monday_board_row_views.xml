@@ -1,0 +1,133 @@
+<odoo>
+    <record id="view_monday_board_row_search" model="ir.ui.view">
+        <field name="name">monday.board.row.search</field>
+        <field name="model">monday.board.row</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="board_id"/>
+                <field name="movement_tag_ids"/>
+                <field name="branch_tag_ids"/>
+                <separator/>
+                <filter string="Con Movimiento" name="with_movement" domain="[('movement_tag_ids','!=',False)]"/>
+                <filter string="Con Sucursal" name="with_branch" domain="[('branch_tag_ids','!=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_monday_board_row_tree" model="ir.ui.view">
+        <field name="name">monday.board.row.tree</field>
+        <field name="model">monday.board.row</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="board_id"/>
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="movement_tag_ids" widget="many2many_tags"/>
+                <field name="branch_tag_ids" widget="many2many_tags"/>
+                <field name="last_update_summary"/>
+                <field name="creation_summary"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_monday_board_row_form" model="ir.ui.view">
+        <field name="name">monday.board.row.form</field>
+        <field name="model">monday.board.row</field>
+        <field name="arch" type="xml">
+            <form string="Board Row">
+                <header>
+                    <button name="action_open_change_log" type="object" string="Historial de Cambios"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="board_id"/>
+                            <field name="sequence"/>
+                            <field name="name" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="last_update_summary" readonly="1"/>
+                            <field name="creation_summary" readonly="1"/>
+                            <field name="movement_tag_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="branch_tag_ids" widget="many2many_tags" readonly="1"/>
+                        </group>
+                    </group>
+                    <field name="cell_ids">
+                        <list editable="bottom">
+                            <field name="column_id" readonly="1"/>
+                            <field name="can_view" readonly="1"/>
+                            <field name="can_edit" readonly="1"/>
+                            <field name="value_text"/>
+                            <field name="value_number" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="value_date"/>
+                            <field name="value_user_id"/>
+                            <field name="value_status"/>
+                            <field name="value_status_color"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                            <field name="display_value" readonly="1"/>
+                        </list>
+                    </field>
+                    <separator string="Historial"/>
+                    <field name="change_log_ids" readonly="1">
+                        <list>
+                            <field name="change_date"/>
+                            <field name="user_id"/>
+                            <field name="column_id"/>
+                            <field name="old_value"/>
+                            <field name="new_value"/>
+                        </list>
+                    </field>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_monday_board_change_log_tree" model="ir.ui.view">
+        <field name="name">monday.board.change.log.tree</field>
+        <field name="model">monday.board.change.log</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="change_date"/>
+                <field name="user_id"/>
+                <field name="row_id"/>
+                <field name="column_id"/>
+                <field name="old_value"/>
+                <field name="new_value"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_monday_board_change_log_form" model="ir.ui.view">
+        <field name="name">monday.board.change.log.form</field>
+        <field name="model">monday.board.change.log</field>
+        <field name="arch" type="xml">
+            <form string="Cambio">
+                <sheet>
+                    <group>
+                        <field name="board_id"/>
+                        <field name="row_id"/>
+                        <field name="column_id"/>
+                    </group>
+                    <group>
+                        <field name="change_date"/>
+                        <field name="user_id"/>
+                    </group>
+                    <group>
+                        <field name="old_value"/>
+                        <field name="new_value"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_monday_board_row" model="ir.actions.act_window">
+        <field name="name">Rows</field>
+        <field name="res_model">monday.board.row</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_monday_board_row_search"/>
+    </record>
+</odoo>

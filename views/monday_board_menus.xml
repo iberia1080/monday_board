@@ -1,0 +1,6 @@
+<odoo>
+    <menuitem id="menu_monday_board_root" name="Boards" sequence="10" groups="monday_board.group_monday_board_user"/>
+    <menuitem id="menu_monday_board_boards" name="Boards" parent="menu_monday_board_root" action="action_monday_board" sequence="10"/>
+    <menuitem id="menu_monday_board_rows" name="Rows" parent="menu_monday_board_root" action="action_monday_board_row" sequence="20" groups="monday_board.group_monday_board_manager"/>
+    <menuitem id="menu_monday_board_columns" name="Columns" parent="menu_monday_board_root" action="action_monday_board_column" sequence="30" groups="monday_board.group_monday_board_manager"/>
+</odoo>

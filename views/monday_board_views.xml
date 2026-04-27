@@ -1,0 +1,90 @@
+<odoo>
+    <record id="view_monday_board_tree" model="ir.ui.view">
+        <field name="name">monday.board.tree</field>
+        <field name="model">monday.board</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="owner_id"/>
+                <field name="company_id"/>
+                <field name="currency_id"/>
+                <field name="column_count"/>
+                <field name="row_count"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_monday_board_form" model="ir.ui.view">
+        <field name="name">monday.board.form</field>
+        <field name="model">monday.board</field>
+        <field name="arch" type="xml">
+            <form string="Board">
+                <header>
+                    <button name="action_open_import_wizard" type="object" string="Import from Monday" class="btn-primary"/>
+                    <button name="action_open_rows" type="object" string="Open Rows"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="owner_id"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group>
+                            <field name="currency_id"/>
+                            <field name="active"/>
+                            <field name="column_count" readonly="1"/>
+                            <field name="row_count" readonly="1"/>
+                        </group>
+                    </group>
+                    <field name="description"/>
+                    <notebook>
+                        <page string="Columns">
+                            <field name="column_ids" context="{'default_board_id': id}">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="field_type"/>
+                                    <field name="width"/>
+                                    <field name="is_currency"/>
+                                    <field name="is_visible_for_current_user" readonly="1"/>
+                                    <field name="is_editable_for_current_user" readonly="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Tags">
+                            <field name="tag_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="column_id"/>
+                                    <field name="color" widget="color_picker"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Rows">
+                            <field name="row_ids" context="{'default_board_id': id}">
+                                <list>
+                                    <field name="sequence"/>
+                                    <field name="name"/>
+                                    <field name="movement_tag_ids" widget="many2many_tags"/>
+                                    <field name="branch_tag_ids" widget="many2many_tags"/>
+                                    <field name="last_update_summary"/>
+                                    <field name="creation_summary"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_monday_board" model="ir.actions.act_window">
+        <field name="name">Boards</field>
+        <field name="res_model">monday.board</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

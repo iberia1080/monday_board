@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_monday_board_user,monday.board user,model_monday_board,monday_board.group_monday_board_user,1,1,1,0
+access_monday_board_manager,monday.board manager,model_monday_board,monday_board.group_monday_board_manager,1,1,1,1
+access_monday_board_column_user,monday.board.column user,model_monday_board_column,monday_board.group_monday_board_user,1,0,0,0
+access_monday_board_column_manager,monday.board.column manager,model_monday_board_column,monday_board.group_monday_board_manager,1,1,1,1
+access_monday_board_row_user,monday.board.row user,model_monday_board_row,monday_board.group_monday_board_user,1,1,1,0
+access_monday_board_row_manager,monday.board.row manager,model_monday_board_row,monday_board.group_monday_board_manager,1,1,1,1
+access_monday_board_cell_user,monday.board.cell user,model_monday_board_cell,monday_board.group_monday_board_user,1,1,1,0
+access_monday_board_cell_manager,monday.board.cell manager,model_monday_board_cell,monday_board.group_monday_board_manager,1,1,1,1
+access_monday_board_tag_user,monday.board.tag user,model_monday_board_tag,monday_board.group_monday_board_user,1,1,1,0
+access_monday_board_tag_manager,monday.board.tag manager,model_monday_board_tag,monday_board.group_monday_board_manager,1,1,1,1
+access_monday_board_status_option_user,monday.board.status.option user,model_monday_board_status_option,monday_board.group_monday_board_user,1,0,0,0
+access_monday_board_status_option_manager,monday.board.status.option manager,model_monday_board_status_option,monday_board.group_monday_board_manager,1,1,1,1
+access_monday_board_change_log_user,monday.board.change.log user,model_monday_board_change_log,monday_board.group_monday_board_user,1,0,1,0
+access_monday_board_change_log_manager,monday.board.change.log manager,model_monday_board_change_log,monday_board.group_monday_board_manager,1,0,0,1
+access_monday_board_import_wizard,monday.board.import.wizard,model_monday_board_import_wizard,monday_board.group_monday_board_manager,1,1,1,1
