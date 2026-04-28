@@ -219,10 +219,22 @@ class MondayBoardRow(models.Model):
     last_update_summary = fields.Char(compute="_compute_summaries", store=False)
     creation_summary = fields.Char(compute="_compute_summaries", store=False)
     movement_tag_ids = fields.Many2many(
-        "monday.board.tag", compute="_compute_tag_fields", string="Movimiento Tags", store=True
+        "monday.board.tag",
+        "monday_row_movement_tag_rel",
+        "row_id",
+        "tag_id",
+        compute="_compute_tag_fields",
+        string="Movimiento Tags",
+        store=True,
     )
     branch_tag_ids = fields.Many2many(
-        "monday.board.tag", compute="_compute_tag_fields", string="Sucursal Tags", store=True
+        "monday.board.tag",
+        "monday_row_branch_tag_rel",
+        "row_id",
+        "tag_id",
+        compute="_compute_tag_fields",
+        string="Sucursal Tags",
+        store=True,
     )
 
     @api.depends(
