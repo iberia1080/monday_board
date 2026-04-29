@@ -103,6 +103,13 @@ class MondayBoard(models.Model):
             "rows": [row.get_grid_row(visible_columns) for row in rows],
         }
 
+    def update_grid_cell_rpc(self, row_id, column_code, value=None, tag_ids=None):
+        self.ensure_one()
+        row = self.env["monday.board.row"].browse(row_id)
+        row.check_access("write")
+        self.update_grid_cell(row, column_code, value=value, tag_ids=tag_ids or [])
+        return self.get_grid_payload()
+
     def update_grid_cell(self, row, column_code, value=None, tag_ids=None):
         self.ensure_one()
         row.ensure_one()

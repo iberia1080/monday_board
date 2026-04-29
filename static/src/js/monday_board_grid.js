@@ -8,7 +8,7 @@ class MondayBoardGrid extends Component {
     static template = "monday_board.MondayBoardGrid";
 
     setup() {
-        this.rpc = useService("rpc");
+        this.orm = useService("orm");
         this.notification = useService("notification");
         this.action = useService("action");
         this.state = useState({
@@ -34,7 +34,7 @@ class MondayBoardGrid extends Component {
 
     async loadBoard() {
         this.state.loading = true;
-        const payload = await this.rpc(`/monday_board/grid_data/${this.boardId}`, {});
+        const payload = await this.orm.call("monday.board", "get_grid_payload", [[this.boardId]]);
         this.state.board = payload.board;
         this.state.columns = payload.columns;
         this.state.rows = payload.rows;
@@ -102,12 +102,12 @@ class MondayBoardGrid extends Component {
 
     async saveCell(rowId, columnCode, payload) {
         try {
-            const data = await this.rpc("/monday_board/update_cell", {
-                board_id: this.boardId,
-                row_id: rowId,
-                column_code: columnCode,
-                ...payload,
-            });
+            const data = await this.orm.call(
+                "monday.board",
+                "update_grid_cell_rpc",
+                [[this.boardId], rowId, columnCode],
+                payload
+            );
             this.state.board = data.board;
             this.state.columns = data.columns;
             this.state.rows = data.rows;
