@@ -14,8 +14,16 @@
         "views/monday_board_row_views.xml",
         "wizard/monday_import_wizard_views.xml",
         "views/monday_board_menus.xml",
+        "views/monday_board_grid_action.xml",
         "data/cash_balance_template.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "monday_board/static/src/scss/monday_board_grid.scss",
+            "monday_board/static/src/xml/monday_board_grid.xml",
+            "monday_board/static/src/js/monday_board_grid.js",
+        ],
+    },
     "application": True,
     "installable": True,
 }

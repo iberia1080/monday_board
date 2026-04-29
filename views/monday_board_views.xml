@@ -22,6 +22,7 @@
             <form string="Board">
                 <header>
                     <button name="action_open_import_wizard" type="object" string="Import from Monday" class="btn-primary"/>
+                    <button name="action_open_grid" type="object" string="Open Grid" class="btn-primary"/>
                     <button name="action_open_rows" type="object" string="Open Rows"/>
                 </header>
                 <sheet>

@@ -1,0 +1,136 @@
+.o_monday_grid_view {
+    padding: 16px 20px 24px;
+    background: #f5f7fb;
+    min-height: 100%;
+}
+
+.o_monday_grid_topbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.o_monday_grid_topbar h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.o_monday_grid_topbar p {
+    margin: 4px 0 0;
+    color: #667085;
+}
+
+.o_monday_grid_filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.o_monday_grid_filters input,
+.o_monday_grid_filters select {
+    min-width: 180px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    padding: 8px 10px;
+    background: #fff;
+}
+
+.o_monday_grid_loading {
+    padding: 30px;
+    background: #fff;
+    border-radius: 16px;
+}
+
+.o_monday_grid_table_wrap {
+    overflow: auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(16, 24, 40, 0.08);
+}
+
+.o_monday_grid_table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1280px;
+}
+
+.o_monday_grid_table th,
+.o_monday_grid_table td {
+    border: 1px solid #dbe2f0;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.o_monday_grid_table th {
+    background: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    font-weight: 600;
+}
+
+.o_monday_grid_input,
+.o_monday_status_select {
+    width: 100%;
+    min-height: 38px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    text-align: center;
+    background: #fff;
+}
+
+.o_monday_status {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 38px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    padding: 6px 10px;
+}
+
+.o_monday_status_select {
+    color: #fff;
+    font-weight: 600;
+}
+
+.o_monday_status_0 { background: #b8b8b8; }
+.o_monday_status_1 { background: #10b981; }
+.o_monday_status_2 { background: #ef4444; }
+.o_monday_status_3 { background: #38bdf8; }
+.o_monday_status_4 { background: #8b5cf6; }
+.o_monday_status_5 { background: #84cc16; }
+.o_monday_status_6 { background: #f472b6; }
+.o_monday_status_7 { background: #a78bfa; }
+.o_monday_status_8 { background: #0ea5e9; }
+.o_monday_status_9 { background: #16a34a; }
+.o_monday_status_10 { background: #f9a8d4; }
+.o_monday_status_11 { background: #2563eb; }
+.o_monday_status_12 { background: #f59e0b; }
+
+.o_monday_tag_list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+.o_monday_tag {
+    border: 0;
+    background: #dbeafe;
+    color: #1d4ed8;
+    border-radius: 8px;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.o_monday_link_button {
+    white-space: normal;
+    text-align: center;
+}

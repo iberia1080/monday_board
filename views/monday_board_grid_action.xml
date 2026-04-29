@@ -1,0 +1,6 @@
+<odoo>
+    <record id="action_monday_board_grid" model="ir.actions.client">
+        <field name="name">Board Grid</field>
+        <field name="tag">monday_board.grid</field>
+    </record>
+</odoo>

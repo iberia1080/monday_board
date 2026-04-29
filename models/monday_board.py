@@ -77,6 +77,62 @@ class MondayBoard(models.Model):
             "context": {"default_board_id": self.id, "search_default_board_id": self.id},
         }
 
+    def action_open_grid(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.client",
+            "tag": "monday_board.grid",
+            "name": self.name,
+            "context": {"board_id": self.id},
+        }
+
+    def get_grid_payload(self):
+        self.ensure_one()
+        visible_columns = self.column_ids.sorted("sequence").filtered(
+            lambda column: column.can_user_view(self.env.user)
+        )
+        rows = self.row_ids.sorted("sequence")
+        return {
+            "board": {
+                "id": self.id,
+                "name": self.name,
+                "description": self.description or "",
+                "currency_symbol": self.currency_id.symbol or "$",
+            },
+            "columns": [column.get_grid_definition() for column in visible_columns],
+            "rows": [row.get_grid_row(visible_columns) for row in rows],
+        }
+
+    def update_grid_cell(self, row, column_code, value=None, tag_ids=None):
+        self.ensure_one()
+        row.ensure_one()
+        column = self.column_ids.filtered(lambda item: item.code == column_code)[:1]
+        if not column:
+            raise UserError(_("Column %s was not found.") % column_code)
+        cell = row.cell_ids.filtered(lambda item: item.column_id == column)[:1]
+        if not cell:
+            raise UserError(_("Cell was not found."))
+
+        if column.field_type == "tag":
+            normalized_ids = [int(tag_id) for tag_id in (tag_ids or [])]
+            cell.write({"tag_ids": [(6, 0, normalized_ids)]})
+            return
+        if column.field_type == "number":
+            cell.write({"value_number": float(value or 0)})
+            return
+        if column.field_type == "date":
+            cell.write({"value_date": value or False})
+            return
+        if column.field_type == "user":
+            cell.write({"value_user_id": int(value) if value else False})
+            return
+        if column.field_type == "status":
+            cell.write({"value_status": value or ""})
+            return
+        if column.field_type in ("text", "time"):
+            cell.write({"value_text": value or ""})
+            return
+
 
 class MondayBoardColumn(models.Model):
     _name = "monday.board.column"
@@ -172,6 +228,33 @@ class MondayBoardColumn(models.Model):
         if not self.edit_group_ids:
             return True
         return bool(self.edit_group_ids & user.groups_id)
+
+    def get_grid_definition(self):
+        self.ensure_one()
+        return {
+            "id": self.id,
+            "name": self.name,
+            "code": self.code,
+            "field_type": self.field_type,
+            "width": self.width or 160,
+            "editable": self.can_user_edit(self.env.user),
+            "is_currency": self.is_currency,
+            "status_options": [
+                {
+                    "name": option.name or "",
+                    "color": option.color or "0",
+                }
+                for option in self.status_option_ids.sorted("sequence")
+            ],
+            "tag_options": [
+                {
+                    "id": tag.id,
+                    "name": tag.name,
+                    "color": tag.color,
+                }
+                for tag in self.tag_ids.sorted("name")
+            ],
+        }
 
 
 class MondayBoardTag(models.Model):
@@ -304,6 +387,27 @@ class MondayBoardRow(models.Model):
             "view_mode": "list,form",
             "domain": [("row_id", "=", self.id)],
             "target": "current",
+        }
+
+    def get_grid_row(self, visible_columns):
+        self.ensure_one()
+        return {
+            "id": self.id,
+            "name": self.name,
+            "cells": [self._serialize_cell(column) for column in visible_columns],
+        }
+
+    def _serialize_cell(self, column):
+        self.ensure_one()
+        cell = self.cell_ids.filtered(lambda item: item.column_id == column)[:1]
+        return cell.get_grid_cell_data() if cell else {
+            "column_code": column.code,
+            "display_value": "",
+            "raw_value": "",
+            "status_color": "0",
+            "tag_ids": [],
+            "tag_labels": [],
+            "attachment_count": 0,
         }
 
 
@@ -510,6 +614,49 @@ class MondayBoardCell(models.Model):
             return self.row_id.last_update_summary or ""
         if field_type == "creation":
             return self.row_id.creation_summary or ""
+        return ""
+
+    def get_grid_cell_data(self):
+        self.ensure_one()
+        return {
+            "id": self.id,
+            "column_code": self.column_id.code,
+            "display_value": self._get_display_value(),
+            "raw_value": self._raw_grid_value(),
+            "status_color": self.value_status_color or "0",
+            "tag_ids": self.tag_ids.ids,
+            "tag_labels": [
+                {
+                    "id": tag.id,
+                    "name": tag.name,
+                    "color": tag.color,
+                }
+                for tag in self.tag_ids.sorted("name")
+            ],
+            "attachment_count": len(self.attachment_ids),
+            "attachment_names": self.attachment_ids.mapped("name"),
+            "editable": self.column_id.can_user_edit(self.env.user),
+        }
+
+    def _raw_grid_value(self):
+        self.ensure_one()
+        field_type = self.column_id.field_type
+        if field_type in ("text", "time", "audit", "creation"):
+            return self.value_text or ""
+        if field_type == "number":
+            return self.value_number or 0.0
+        if field_type == "date":
+            return fields.Date.to_string(self.value_date) if self.value_date else ""
+        if field_type == "user":
+            return self.value_user_id.id or False
+        if field_type == "status":
+            return self.value_status or ""
+        if field_type == "tag":
+            return self.tag_ids.ids
+        if field_type == "attachment":
+            return self.attachment_ids.ids
+        if field_type == "formula":
+            return self._evaluate_formula()
         return ""
 
 

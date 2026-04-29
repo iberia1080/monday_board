@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="monday_board.MondayBoardGrid">
+        <div class="o_monday_grid_view">
+            <div class="o_monday_grid_topbar">
+                <div>
+                    <h1 t-esc="state.board ? state.board.name : 'Board'"/>
+                    <p t-if="state.board" t-esc="state.board.description"/>
+                </div>
+                <div class="o_monday_grid_filters">
+                    <input type="text" placeholder="Buscar..." t-att-value="state.filters.query" t-on-input="onFilterInput"/>
+                    <select t-on-change="(ev) => this.onSelectFilter('movimiento', ev)">
+                        <option value="">Todos los movimientos</option>
+                        <t t-foreach="movimientoOptions" t-as="option" t-key="option.id">
+                            <option t-att-value="option.name" t-att-selected="state.filters.movimiento === option.name ? true : undefined"><t t-esc="option.name"/></option>
+                        </t>
+                    </select>
+                    <select t-on-change="(ev) => this.onSelectFilter('sucursal', ev)">
+                        <option value="">Todas las sucursales</option>
+                        <t t-foreach="sucursalOptions" t-as="option" t-key="option.id">
+                            <option t-att-value="option.name" t-att-selected="state.filters.sucursal === option.name ? true : undefined"><t t-esc="option.name"/></option>
+                        </t>
+                    </select>
+                    <button class="btn btn-secondary" t-on-click="clearFilters">Limpiar filtros</button>
+                </div>
+            </div>
+
+            <t t-if="state.loading">
+                <div class="o_monday_grid_loading">Cargando tablero...</div>
+            </t>
+            <t t-else="">
+                <div class="o_monday_grid_table_wrap">
+                    <table class="o_monday_grid_table">
+                        <thead>
+                            <tr>
+                                <t t-foreach="state.columns" t-as="column" t-key="column.id">
+                                    <th t-att-style="'min-width:' + column.width + 'px'">
+                                        <span t-esc="column.name"/>
+                                    </th>
+                                </t>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="filteredRows" t-as="row" t-key="row.id">
+                                <tr>
+                                    <t t-foreach="state.columns" t-as="column" t-key="column.id">
+                                        <t t-set="cell" t-value="row.cells.find((item) => item.column_code === column.code)"/>
+                                        <td>
+                                            <t t-if="column.field_type === 'status'">
+                                                <t t-if="column.editable">
+                                                    <select class="o_monday_status_select" t-att-class="statusClass(cell)" t-att-value="cell.raw_value" t-on-change="(ev) => this.onCellChange(row, column, ev)">
+                                                        <t t-foreach="column.status_options" t-as="option" t-key="option.name + option.color">
+                                                            <option t-att-value="option.name" t-att-selected="cell.raw_value === option.name ? true : undefined">
+                                                                <t t-esc="option.name || 'Sin estado'"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </t>
+                                                <t t-else="">
+                                                    <span t-att-class="statusClass(cell)">
+                                                        <t t-esc="formatCell(column, cell) or 'Sin estado'"/>
+                                                    </span>
+                                                </t>
+                                            </t>
+                                            <t t-elif="column.field_type === 'tag'">
+                                                <div class="o_monday_tag_list">
+                                                    <t t-foreach="cell.tag_labels" t-as="tag" t-key="tag.id">
+                                                        <button class="o_monday_tag" t-on-click="() => this.onTagFilterClick(column.code, tag.name)">
+                                                            <t t-esc="tag.name"/>
+                                                        </button>
+                                                    </t>
+                                                </div>
+                                            </t>
+                                            <t t-elif="column.field_type in ['text', 'time', 'number', 'date'] and column.editable">
+                                                <input
+                                                    class="o_monday_grid_input"
+                                                    t-att-type="column.field_type === 'number' ? 'number' : (column.field_type === 'date' ? 'date' : 'text')"
+                                                    t-att-value="cell.raw_value"
+                                                    t-on-change="(ev) => this.onCellChange(row, column, ev)"
+                                                />
+                                            </t>
+                                            <t t-elif="column.field_type === 'audit'">
+                                                <button class="btn btn-link o_monday_link_button" t-on-click="() => this.openRowHistory(row)">
+                                                    <t t-esc="formatCell(column, cell) or 'Ver historial'"/>
+                                                </button>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="formatCell(column, cell)"/>
+                                            </t>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>
